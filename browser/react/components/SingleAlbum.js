@@ -27,7 +27,14 @@ export default class SingleAlbum extends Component {
     return (
       <div className="album">
         <div>
-          <h3>{ album.name }</h3>
+          <div>
+            <h3>{ album.name }</h3>
+            <a href={
+              `mailto:?subject=${album.name}&body=Check%20out%20this%20groovy%20album: ${window.location.href}`
+            }>
+              <button id="send-album-btn" className="glyphicon glyphicon-share btn btn-default btn-xs"></button>
+            </a>
+          </div>
           <img src={ album.imageUrl } className="img-thumbnail" />
         </div>
         <Songs songs={album.songs} />

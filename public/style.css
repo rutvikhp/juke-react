@@ -60,3 +60,10 @@ footer {
 
 .album img {
   height: 300px; }
+
+.album h3 {
+  display: inline-block; }
+
+#send-album-btn {
+  margin-left: 5px;
+  margin-bottom: 10px; }
