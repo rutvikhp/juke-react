@@ -11,9 +11,7 @@ export default class SingleAlbum extends Component {
     };
   }
 
-  componentDidMount () {
-    const albumId = this.props.match.params.albumId;
-
+  fetchAlbum (albumId) {
     axios.get(`/api/albums/${albumId}`)
       .then(res => res.data)
       .then(album => this.setState({
@@ -21,20 +19,26 @@ export default class SingleAlbum extends Component {
       }));
   }
 
+  componentDidMount () {
+    const albumId = this.props.match.params.albumId;
+    this.fetchAlbum(albumId);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const nextAlbumId = nextProps.match.params.albumId;
+    const currentAlbumId = this.props.match.params.albumId;
+    if (nextAlbumId !== currentAlbumId)
+      this.fetchAlbum(nextAlbumId);
+  }
+
+
   render () {
     const album = this.state.album;
 
     return (
       <div className="album">
         <div>
-          <div>
-            <h3>{ album.name }</h3>
-            <a href={
-              `mailto:?subject=${album.name}&body=Check%20out%20this%20groovy%20album: ${window.location.href}`
-            }>
-              <button id="send-album-btn" className="glyphicon glyphicon-share btn btn-default btn-xs"></button>
-            </a>
-          </div>
+          <h3>{ album.name }</h3>
           <img src={ album.imageUrl } className="img-thumbnail" />
         </div>
         <Songs songs={album.songs} />
